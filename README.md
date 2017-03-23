@@ -16,7 +16,7 @@ A video player for iOS based on AVFoundation,JDPlayer is powerful and easy to in
 ## Quick Try
 To run the Demo project; clone the repo,open JDPlayerPro.xcodeproj in Xcode to run Demo Application.
 
-###Getting Start
+### Getting Start
 ```objective-c
 JDVideoModel* videoModel = [[JDVideoModel alloc]init];
 videoModel.streamURL = [NSURL URLWithString:@"assetUrl..."];
