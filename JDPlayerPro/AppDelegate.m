@@ -2,11 +2,12 @@
 //  AppDelegate.m
 //  JDPlayerPro
 //
-//  Created by yaoshibang on 2017/3/23.
+//  Created by depa on 2017/3/23.
 //  Copyright © 2017年 depa. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    ViewController *vc = [[ViewController alloc] init];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = navi;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 

@@ -2,7 +2,7 @@
 //  main.m
 //  JDPlayerPro
 //
-//  Created by yaoshibang on 2017/3/23.
+//  Created by depa on 2017/3/23.
 //  Copyright © 2017年 depa. All rights reserved.
 //
 
