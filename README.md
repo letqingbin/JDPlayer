@@ -25,7 +25,7 @@ player.delegate = self;
 [player loadVideoModel:videoModel];
 ```
 
-##Customize
+## Customize
 JDPlayer has simple way for customize your own controls.
 ```objective-c
 - (void)addSubviewForControl:(UIView *)view;
@@ -33,7 +33,7 @@ JDPlayer has simple way for customize your own controls.
 - (void)addSubviewForControl:(UIView *)view toView:(UIView*)parentView forOrientation:(UIInterfaceOrientationMask)orientation;
 ```
 
-##Callbacks
+## Callbacks
 ```objective-c
 - (BOOL)shouldVideoPlayer:(JDPlayer*)videoPlayer changeStateTo:(JDPlayerState)toState;
 - (void)videoPlayer:(JDPlayer*)videoPlayer willChangeStateTo:(JDPlayerState)toState;
