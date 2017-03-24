@@ -45,6 +45,7 @@
 
 
     self.shouldRotate = YES;
+    [self addObserver];
     [self playVideo];
 }
 
@@ -64,6 +65,18 @@
     [super viewWillDisappear:animated];
 
     self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)addObserver
+{
+    NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    [defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -92,7 +105,7 @@
 
     if (self.player.state == JDPlayerStatePlaying)
     {
-        [self.player pauseContent:NO recordLastWatchedTime:NO completionHandler:nil];
+        [self.player pauseContent:NO recordCurrentTime:YES completionHandler:nil];
     }
 }
 
