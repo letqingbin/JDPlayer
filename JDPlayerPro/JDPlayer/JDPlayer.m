@@ -57,7 +57,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 @property (nonatomic, assign) NSTimeInterval previousPlaybackTime;
 @property (nonatomic, strong) id timeObserver;
 @property (nonatomic, assign) float seekTime;
-
+@property (nonatomic, assign) BOOL recordLastWatchedTime;
 @end
 
 @implementation JDPlayer
@@ -93,6 +93,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
     self.scrubbing  = NO;
     self.seekTime   = 0.0f;
     self.previousPlaybackTime = 0;
+    self.recordLastWatchedTime = YES;
 }
 
 - (void)addObservers
@@ -114,8 +115,8 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
         case JDPlayerStateLoading:
         case JDPlayerStateError:
         {
-            [self pauseContent:NO completionHandler:^{
 
+            [self pauseContent:NO recordLastWatchedTime:NO completionHandler:^{
                 if ([self.delegate respondsToSelector:@selector(videoPlayer:willStartVideo:)])
                 {
                     [self.delegate videoPlayer:self willStartVideo:self.jdView.videoModel];
@@ -302,7 +303,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.jdView.videoModel.isPlayedToEnd = YES;
-        [self pauseContent:NO completionHandler:^{
+        [self pauseContent:NO recordLastWatchedTime:NO completionHandler:^{
             if ([self.delegate respondsToSelector:@selector(videoPlayer:didPlayToEnd:)])
             {
                 [self.delegate videoPlayer:self didPlayToEnd:self.jdView.videoModel];
@@ -369,7 +370,13 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
             case JDPlayerStatePaused:
                 [self.jdView setControlsEnabled:YES];
                 [self.jdView.playButton setSelected:YES];
-                self.jdView.videoModel.lastDurationWatchedInSeconds = (float)[self currentTime];
+
+                if(self.recordLastWatchedTime)
+                {
+                    self.jdView.videoModel.lastDurationWatchedInSeconds = (float)[self currentTime];
+                }
+                self.recordLastWatchedTime = YES;
+
                 [self.avPlayer pause];
                 break;
             case JDPlayerStateError:
@@ -400,7 +407,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 
 - (void)playContent
 {
-    if (self.state == JDPlayerStatePaused)
+    if (self.state == JDPlayerStatePaused || self.state == JDPlayerStateLoading)
     {
         self.state = JDPlayerStatePlaying;
     }
@@ -408,16 +415,18 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 
 - (void)pauseContent
 {
-    [self pauseContent:NO completionHandler:nil];
+    [self pauseContent:NO recordLastWatchedTime:YES completionHandler:nil];
 }
 
 - (void)pauseContentWithCompletionHandler:(void (^)())completionHandler
 {
-    [self pauseContent:NO completionHandler:completionHandler];
+    [self pauseContent:NO recordLastWatchedTime:YES completionHandler:completionHandler];
 }
 
-- (void)pauseContent:(BOOL)isUserAction completionHandler:(void (^)())completionHandler
+- (void)pauseContent:(BOOL)isUserAction  recordLastWatchedTime:(BOOL)shouldRecord completionHandler:(void (^)())completionHandler
 {
+    self.recordLastWatchedTime = shouldRecord;
+
     switch ([self.playerItem status]) {
         case AVPlayerItemStatusFailed:
             self.state = JDPlayerStateError;
@@ -484,7 +493,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
             completionHandler();
             break;
         case JDPlayerStatePlaying:
-            [self pauseContent:NO completionHandler:completionHandler];
+            [self pauseContent:NO recordLastWatchedTime:NO completionHandler:completionHandler];
             break;
         default:
             break;
@@ -508,7 +517,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
             completionHandler();
             break;
         case JDPlayerStatePlaying:
-            [self pauseContent:NO completionHandler:completionHandler];
+            [self pauseContent:NO recordLastWatchedTime:NO completionHandler:completionHandler];
             break;
         default:
             break;
@@ -618,7 +627,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
     self.scrubbing = YES;
 
     @weakify(self)
-    [self pauseContent:NO completionHandler:^{
+    [self pauseContent:NO recordLastWatchedTime:YES completionHandler:^{
         @strongify(self)
         self.jdView.countdownToHide = -1;
     }];
@@ -712,9 +721,12 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 - (void)didNextVideoButtonPressed
 {
     if ([self.delegate respondsToSelector:@selector(videoPlayer:didNextVideoButtonPressed:)]) {
-        self.state = JDPlayerStateLoading;
-        [self.avPlayer pause];
-        [self.delegate videoPlayer:self didNextVideoButtonPressed:self.jdView.videoModel];
+        [self pauseContent:NO recordLastWatchedTime:NO completionHandler:^{
+            if ([self.delegate respondsToSelector:@selector(videoPlayer:didPlayToEnd:)])
+            {
+                [self.delegate videoPlayer:self didNextVideoButtonPressed:self.jdView.videoModel];
+            }
+        }];
     }
 }
 

@@ -91,6 +91,6 @@ typedef NS_ENUM(NSInteger,JDPlayerState)
 - (void)playContent;
 - (void)pauseContent;
 - (void)pauseContentWithCompletionHandler:(void (^)())completionHandler;
-- (void)pauseContent:(BOOL)isUserAction completionHandler:(void (^)())completionHandler;
+- (void)pauseContent:(BOOL)isUserAction  recordLastWatchedTime:(BOOL)shouldRecord completionHandler:(void (^)())completionHandler;
 
 @end

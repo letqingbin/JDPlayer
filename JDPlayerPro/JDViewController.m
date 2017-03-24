@@ -92,7 +92,7 @@
 
     if (self.player.state == JDPlayerStatePlaying)
     {
-        [self.player pauseContent:NO completionHandler:nil];
+        [self.player pauseContent:NO recordLastWatchedTime:NO completionHandler:nil];
     }
 }
 
