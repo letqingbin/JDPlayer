@@ -153,7 +153,9 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 
 - (void)setAvPlayer:(AVPlayer *)avPlayer
 {
+    [_avPlayer removeTimeObserver:self.timeObserver];
     self.timeObserver = nil;
+
     [_avPlayer removeObserver:self forKeyPath:@"status"];
     _avPlayer = avPlayer;
 
@@ -365,7 +367,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
             case JDPlayerStatePaused:
                 [self.jdView setControlsEnabled:YES];
                 [self.jdView.playButton setSelected:YES];
-                self.jdView.videoModel.lastDurationWatchedInSeconds = @([self currentTime]);
+                self.jdView.videoModel.lastDurationWatchedInSeconds = (float)[self currentTime];
                 [self.avPlayer pause];
                 break;
             case JDPlayerStateError:
@@ -526,6 +528,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
             return;
         }
     }
+
     [self clearPlayer];
 
     if (!videoModel.streamURL)
@@ -585,7 +588,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 
         self.jdView.playButton.enabled = NO;
 
-        CGFloat lastWatchedTime = [self.jdView.videoModel.lastDurationWatchedInSeconds floatValue];
+        CGFloat lastWatchedTime = self.jdView.videoModel.lastDurationWatchedInSeconds;
         if (lastWatchedTime > 5) lastWatchedTime -= 5;
 
         NSLog(@"Seeking to last watched duration: %f", lastWatchedTime);
@@ -652,7 +655,6 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    self.timeObserver = nil;
     self.avPlayer   = nil;
     self.playerItem = nil;
 }
@@ -708,7 +710,6 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 - (void)didNextVideoButtonPressed
 {
     if ([self.delegate respondsToSelector:@selector(videoPlayer:didNextVideoButtonPressed:)]) {
-        self.state = JDPlayerStatePaused;
         [self.delegate videoPlayer:self didNextVideoButtonPressed:self.jdView.videoModel];
     }
 }

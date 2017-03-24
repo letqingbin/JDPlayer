@@ -18,7 +18,7 @@
 @property(nonatomic, assign) BOOL canSeekToTime;
 
 @property(nonatomic, strong) NSURL* streamURL;
-@property(nonatomic, strong) NSNumber* totalVideoDuration;
-@property(nonatomic, strong) NSNumber* lastDurationWatchedInSeconds;
+@property(nonatomic, assign) float totalVideoDuration;
+@property(nonatomic, assign) float lastDurationWatchedInSeconds;
 
 @end

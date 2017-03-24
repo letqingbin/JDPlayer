@@ -45,7 +45,6 @@
       takeUntil:self.rac_willDeallocSignal]
      subscribeNext:^(id x) {
          @strongify(self)
-
          if([self.delegate respondsToSelector:@selector(scrubberDidBeginScrubbing:)])
          {
              [self.delegate scrubberDidBeginScrubbing:self];
@@ -56,7 +55,6 @@
       takeUntil:self.rac_willDeallocSignal]
      subscribeNext:^(id x) {
          @strongify(self)
-
          if([self.delegate respondsToSelector:@selector(scrubberDidEndScrubbing:)])
          {
              [self.delegate scrubberDidEndScrubbing:self];
@@ -67,7 +65,6 @@
       takeUntil:self.rac_willDeallocSignal]
      subscribeNext:^(id x) {
          @strongify(self)
-
          if([self.delegate respondsToSelector:@selector(scrubberValueDidChange:)])
          {
              [self.delegate scrubberValueDidChange:self];
@@ -90,6 +87,8 @@
 {
     [super setValue:value animated:animated];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+
+    NSLog(@"scrubberValue = %lf",value);
 }
 
 - (UIProgressView *)cacheProgressView

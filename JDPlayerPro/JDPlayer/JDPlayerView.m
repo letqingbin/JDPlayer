@@ -287,12 +287,12 @@
                     {
                         self.seekTime = 0.0f;
                     }
-                    if(self.seekTime >= self.videoModel.totalVideoDuration.floatValue)
+                    if(self.seekTime >= self.videoModel.totalVideoDuration)
                     {
-                        self.seekTime = self.videoModel.totalVideoDuration.floatValue;
+                        self.seekTime = self.videoModel.totalVideoDuration;
                     }
 
-                    self.seekTimeLabel.text = [NSString stringWithFormat:@"%@ / %@",[JDPlayerView timeStringFromSecondsValue:(int)self.seekTime],[JDPlayerView timeStringFromSecondsValue:self.videoModel.totalVideoDuration.intValue]];
+                    self.seekTimeLabel.text = [NSString stringWithFormat:@"%@ / %@",[JDPlayerView timeStringFromSecondsValue:(int)self.seekTime],[JDPlayerView timeStringFromSecondsValue:self.videoModel.totalVideoDuration]];
 
                     if([self.delegate respondsToSelector:@selector(didSwipingHorizontal)])
                     {
@@ -395,7 +395,7 @@
     //kJDDurationDidLoadNotification
     NSDictionary *info = [notification userInfo];
     NSNumber* duration = [info objectForKey:@"duration"];
-    self.videoModel.totalVideoDuration = duration;
+    self.videoModel.totalVideoDuration = [duration floatValue];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         self.scrubber.maximumValue = [duration floatValue];
@@ -812,7 +812,7 @@
     if(!_seekTimeLabel)
     {
         _seekTimeLabel = [JDPlayerView createLabelWithFrame:CGRectZero
-                                                           title:[NSString stringWithFormat:@"%@ / %@",[JDPlayerView timeStringFromSecondsValue:(int)self.seekTime],[JDPlayerView timeStringFromSecondsValue:self.videoModel.totalVideoDuration.intValue]]
+                                                           title:[NSString stringWithFormat:@"%@ / %@",[JDPlayerView timeStringFromSecondsValue:(int)self.seekTime],[JDPlayerView timeStringFromSecondsValue:(int)self.videoModel.totalVideoDuration]]
                                                        textColor:[UIColor whiteColor]
                                                          bgColor:[UIColor clearColor]
                                                         fontSize:25.0f

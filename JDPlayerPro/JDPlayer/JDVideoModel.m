@@ -20,6 +20,9 @@
         self.hasPrevious = NO;
         self.canSeekToTime = YES;
         self.isPlayedToEnd = NO;
+
+        self.totalVideoDuration = 1.0f;
+        self.lastDurationWatchedInSeconds = 0.0f;
     }
 
     return self;
