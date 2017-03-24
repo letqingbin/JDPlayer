@@ -138,6 +138,8 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
     [_playerItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
 
+    [self.jdView reset];
+
     _playerItem = playerItem;
     if (!playerItem)
     {
@@ -710,6 +712,8 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 - (void)didNextVideoButtonPressed
 {
     if ([self.delegate respondsToSelector:@selector(videoPlayer:didNextVideoButtonPressed:)]) {
+        self.state = JDPlayerStateLoading;
+        [self.avPlayer pause];
         [self.delegate videoPlayer:self didNextVideoButtonPressed:self.jdView.videoModel];
     }
 }

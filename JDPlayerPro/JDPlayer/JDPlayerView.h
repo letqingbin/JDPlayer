@@ -61,6 +61,7 @@ extern NSString* kJDScrubberValueUpdatedNotification;
 
 - (void)startLoading;
 - (void)stopLoading;
+- (void)reset;
 
 - (void)setControlsEnabled:(BOOL)enabled;
 - (void)setControlsHidden:(BOOL)hidden;

@@ -175,21 +175,25 @@
 
 - (void)initProperty
 {
+    [self reset];
+
     CGRect bounds = [[UIScreen mainScreen] bounds];
     self.portraitFrame  = CGRectMake(0, 0, MIN(bounds.size.width, bounds.size.height), MAX(bounds.size.width, bounds.size.height));
     self.landscapeFrame = CGRectMake(0, 0, MAX(bounds.size.width, bounds.size.height), MIN(bounds.size.width, bounds.size.height));
 
-    self.seekTime                    = 0.0f;
-    self.countdownToHide             = 5;
+    self.isFullScreen = NO;
     self.supportedOrientations       = UIInterfaceOrientationMaskAllButUpsideDown;
     self.visibleInterfaceOrientation = UIInterfaceOrientationPortrait;
-
-    self.isFullScreen = NO;
-    self.isControlsHidden  = NO;
-    self.isControlsEnabled = YES;
-    self.isDirectionHorizontal = NO;
-
     [self.scrubber setValue:0.0f animated:NO];
+}
+
+- (void)reset
+{
+    self.seekTime               = 0.0f;
+    self.countdownToHide        = 5;
+    self.isControlsHidden       = NO;
+    self.isControlsEnabled      = YES;
+    self.isDirectionHorizontal  = NO;
 }
 
 - (void)setIsFullScreen:(BOOL)isFullScreen
@@ -498,7 +502,7 @@
     }
 }
 
-- (void)setcountdownToHide:(NSInteger)countdownToHide
+- (void)setCountdownToHide:(NSInteger)countdownToHide
 {
     _countdownToHide = countdownToHide;
     if (countdownToHide == 0)

@@ -87,8 +87,6 @@
 {
     [super setValue:value animated:animated];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
-
-    NSLog(@"scrubberValue = %lf",value);
 }
 
 - (UIProgressView *)cacheProgressView
