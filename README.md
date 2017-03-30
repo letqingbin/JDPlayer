@@ -48,3 +48,7 @@ JDPlayer has simple way for customize your own controls.
 - (void)videoPlayer:(JDPlayer*)videoPlayer didPreviousVideoButtonPressed:(JDVideoModel *)videoModel;
 ```
 
+## License
+
+JDPlayer is released under the MIT license. See LICENSE for details.
+
