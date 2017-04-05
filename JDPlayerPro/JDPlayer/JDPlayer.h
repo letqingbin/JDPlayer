@@ -56,6 +56,8 @@ typedef NS_ENUM(NSInteger,JDPlayerState)
 - (void)videoPlayer:(JDPlayer*)videoPlayer didNextVideoButtonPressed:(JDVideoModel *)videoModel;
 - (void)videoPlayer:(JDPlayer*)videoPlayer didPreviousVideoButtonPressed:(JDVideoModel *)videoModel;
 
+- (void)videoPlayer:(JDPlayer *)videoPlayer didVideoQualityButtonPressed:(JDVideoModel *)videoModel;
+
 - (void)handleErrorCode:(JDPlayerErrorCode)errorCode videoModel:(JDVideoModel *)videoModel customMessage:(NSString*)customMessage;
 @end
 

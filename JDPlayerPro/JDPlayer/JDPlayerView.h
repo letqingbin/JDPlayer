@@ -23,6 +23,7 @@ extern NSString* kJDScrubberValueUpdatedNotification;
 - (void)didRewindButtonPressed;
 - (void)didDoneButtonPressed;
 - (void)didSwipingHorizontal;
+- (void)didVideoQualityButtonPressed;
 
 @required
 - (float)didBeginSwipeHorizontal;

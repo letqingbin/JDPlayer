@@ -803,6 +803,14 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
     return [self currentTime];
 }
 
+- (void)didVideoQualityButtonPressed
+{
+    if([self.delegate respondsToSelector:@selector(videoPlayer:didVideoQualityButtonPressed:)])
+    {
+        [self.delegate videoPlayer:self didVideoQualityButtonPressed:self.jdView.videoModel];
+    }
+}
+
 #pragma mark -- scrubber delegate
 - (void)scrubberDidBeginScrubbing:(JDScrubber*)scrubber
 {
