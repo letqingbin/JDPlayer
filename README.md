@@ -50,13 +50,15 @@ JDPlayer has simple way for customize your own controls.
 
 ## How to change video quality?
 
-First,IN JDPlayerView, you should custom your own control(such as button),and invoke 
+### First
+IN JDPlayerView, you should custom your own control(such as button),and invoke 
 ```
 - (void)didVideoQualityButtonPressed;
 ```
 in button's control events(such as UIControlEventTouchUpInside);
 
-Second,IN your own Controller,change video quality in delegate
+### Second
+IN your own Controller,change video quality in delegate
 ```
 - (void)videoPlayer:(JDPlayer *)videoPlayer didVideoQualityButtonPressed:(JDVideoModel *)videoModel;
 ```
