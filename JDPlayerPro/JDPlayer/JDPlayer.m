@@ -131,6 +131,16 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
     }
 }
 
+- (void)setTimeObserver:(id)timeObserver
+{
+    if(timeObserver)
+    {
+        [self.avPlayer removeTimeObserver:_timeObserver];
+    }
+
+    _timeObserver = timeObserver;
+}
+
 - (void)setPlayerItem:(AVPlayerItem *)playerItem
 {
     [_playerItem removeObserver:self forKeyPath:@"status"];
@@ -156,7 +166,6 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 
 - (void)setAvPlayer:(AVPlayer *)avPlayer
 {
-    [_avPlayer removeTimeObserver:self.timeObserver];
     self.timeObserver = nil;
 
     [_avPlayer removeObserver:self forKeyPath:@"status"];
