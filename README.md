@@ -1,5 +1,5 @@
 # JDPlayer
-A video player for iOS based on AVFoundation,JDPlayer is powerful and easy to integrate in your project.
+A video player written in Objective-C based on AVFoundation framework. JDPlayer is powerful and easy to integrate in your project.
 
 
 ## Features
@@ -14,7 +14,10 @@ A video player for iOS based on AVFoundation,JDPlayer is powerful and easy to in
 - pure objective-c code
 
 ## Quick Try
-To run the Demo project; clone the repo,open JDPlayerPro.xcodeproj in Xcode to run Demo Application.
+To run the Demo project
+1. Clone this repository
+2. Open JDPlayerPro.xcodeproj in Xcode
+3. Run Demo Application
 
 ### Getting Start
 ```objective-c
@@ -50,13 +53,13 @@ JDPlayer has simple way for customize your own controls.
 
 ## How to change video quality?
 
-1. In JDPlayerView, you should custom your own control(such as button),and invoke 
+1. In JDPlayerView, you should custom your own control (e.g. a button), and invoke 
 ```
 - (void)didVideoQualityButtonPressed;
 ```
-in button's control events(such as UIControlEventTouchUpInside);
+in button's control events (e.g. UIControlEventTouchUpInside).
 
-2. In your own Controller,change video quality in delegate
+2. In your own controller, change video quality in delegate
 ```
 - (void)videoPlayer:(JDPlayer *)videoPlayer didVideoQualityButtonPressed:(JDVideoModel *)videoModel;
 ```
