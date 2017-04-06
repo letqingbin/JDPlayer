@@ -122,6 +122,7 @@
 		C4328A601E83A4CD0007B626 /* JDScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = C4328A5A1E83A4CD0007B626 /* JDScrubber.m */; };
 		C4328A611E83A4CD0007B626 /* JDVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4328A5C1E83A4CD0007B626 /* JDVideoModel.m */; };
 		C4328A641E83A4EC0007B626 /* JDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4328A631E83A4EC0007B626 /* JDViewController.m */; };
+		C4A88AB61E95D96200F907A1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A88AB51E95D96200F907A1 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -368,6 +369,8 @@
 		C4328A5D1E83A4CD0007B626 /* JDVideoPlayLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDVideoPlayLayerView.h; sourceTree = "<group>"; };
 		C4328A621E83A4EC0007B626 /* JDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDViewController.h; sourceTree = "<group>"; };
 		C4328A631E83A4EC0007B626 /* JDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDViewController.m; sourceTree = "<group>"; };
+		C4A88AB41E95D96200F907A1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		C4A88AB51E95D96200F907A1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +403,7 @@
 		C43288F11E83A4660007B626 /* JDPlayerPro */ = {
 			isa = PBXGroup;
 			children = (
+				C4A88AB31E95D96200F907A1 /* Reachability */,
 				C432890A1E83A4AC0007B626 /* Masonry */,
 				C43289241E83A4AC0007B626 /* ReactiveCocoa */,
 				C43289091E83A4900007B626 /* JDPlayer */,
@@ -702,6 +706,15 @@
 			path = ReactiveViewModel;
 			sourceTree = "<group>";
 		};
+		C4A88AB31E95D96200F907A1 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				C4A88AB41E95D96200F907A1 /* Reachability.h */,
+				C4A88AB51E95D96200F907A1 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -834,6 +847,7 @@
 				C4328A461E83A4AC0007B626 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				C4328A231E83A4AC0007B626 /* RACKVOTrampoline.m in Sources */,
 				C4328A441E83A4AC0007B626 /* UIControl+RACSignalSupport.m in Sources */,
+				C4A88AB61E95D96200F907A1 /* Reachability.m in Sources */,
 				C4328A111E83A4AC0007B626 /* RACCommand.m in Sources */,
 				C43289F41E83A4AC0007B626 /* View+MASAdditions.m in Sources */,
 				C43289F61E83A4AC0007B626 /* EXTRuntimeExtensions.m in Sources */,
@@ -1046,6 +1060,7 @@
 				C43289081E83A4660007B626 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

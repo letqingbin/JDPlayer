@@ -25,6 +25,8 @@ NSString* kJDProgressValueUpdatedNotification = @"kJDProgressValueUpdatedNotific
 NSString* kJDDurationDidLoadNotification = @"kJDDurationDidLoadNotification";
 NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotification";
 
+extern NSString *const kReachabilityChangedNotification;
+
 @implementation AVPlayer (JDPlayer)
 
 - (void)seekToTimeInSeconds:(float)time completionHandler:(void (^)(BOOL finished))completionHandler
@@ -58,6 +60,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 @property (nonatomic, strong) id timeObserver;
 @property (nonatomic, assign) float seekTime;
 @property (nonatomic, assign) BOOL recordCurrentTime;
+@property (nonatomic, strong) Reachability *reachability;
 @end
 
 @implementation JDPlayer
@@ -100,6 +103,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 {
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(playerItemReadyToPlay) name:kJDVideoPlayerItemReadyToPlay object:nil];
+    [defaultCenter addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 }
 
 - (void)playerItemReadyToPlay
@@ -131,14 +135,52 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
     }
 }
 
+- (void) reachabilityChanged:(NSNotification*) notification
+{
+    if([self.reachability currentReachabilityStatus] == ReachableViaWiFi)
+    {
+        NSLog(@"ReachableViaWiFi");
+    }
+    else if([self.reachability currentReachabilityStatus] == ReachableViaWWAN)
+    {
+        NSLog(@"ReachableViaWWAN");
+    }
+    else if([self.reachability currentReachabilityStatus] == NotReachable)
+    {
+        NSLog(@"NotReachable");
+    }
+
+    if([self.delegate respondsToSelector:@selector(videoPlayer:videoModel:reachabilityChanged:)])
+    {
+        [self.delegate videoPlayer:self videoModel:self.jdView.videoModel reachabilityChanged:[self.reachability currentReachabilityStatus]];
+    }
+}
+
 - (void)setTimeObserver:(id)timeObserver
 {
-    if(timeObserver)
+    if(_timeObserver)
     {
         [self.avPlayer removeTimeObserver:_timeObserver];
     }
 
     _timeObserver = timeObserver;
+}
+
+- (void)setReachability:(Reachability *)reachability
+{
+    if(_reachability)
+    {
+        [_reachability stopNotifier];
+    }
+
+    _reachability = reachability;
+
+    if(reachability)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [_reachability startNotifier];
+        });
+    }
 }
 
 - (void)setPlayerItem:(AVPlayerItem *)playerItem
@@ -591,6 +633,9 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
                 self.avPlayer   = [AVPlayer playerWithPlayerItem:self.playerItem];
 
                 [playLayer setPlayer:self.avPlayer];
+
+                Reachability* reachability = [Reachability reachabilityWithHostname:streamURL.absoluteString];
+                self.reachability = reachability;
             }
             else
             {
@@ -675,6 +720,8 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
+    self.reachability = nil;
+    self.timeObserver = nil;
     self.avPlayer   = nil;
     self.playerItem = nil;
 }
@@ -805,7 +852,7 @@ NSString* kJDScrubberValueUpdatedNotification = @"kJDScrubberValueUpdatedNotific
 
 - (void)didVideoQualityButtonPressed
 {
-    [self pauseContent:NO recordCurrentTime:NO completionHandler:^{
+    [self pauseContent:NO recordCurrentTime:YES completionHandler:^{
         if([self.delegate respondsToSelector:@selector(videoPlayer:didVideoQualityButtonPressed:)])
         {
             [self.delegate videoPlayer:self didVideoQualityButtonPressed:self.jdView.videoModel];

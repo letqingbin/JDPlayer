@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JDPlayerPro/JDPlayer/JDPlayer.m"
-            timestampString = "512024319.975524"
+            timestampString = "513138544.599037"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "378"
-            endingLineNumber = "378"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "-setState:"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JDPlayerPro/JDPlayer/JDPlayer.m"
-            timestampString = "512036664.020449"
+            timestampString = "513138544.599037"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "-setState:"
             landmarkType = "7">
          </BreakpointContent>
